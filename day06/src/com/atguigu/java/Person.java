@@ -32,6 +32,7 @@ public class Person implements Comparable {
         this.age = age;
     }
 
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
