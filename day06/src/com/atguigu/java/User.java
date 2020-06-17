@@ -1,13 +1,12 @@
 package com.atguigu.java;
 
-import java.util.Comparator;
 import java.util.Objects;
 
 /**
  * @author Eric Ni
  * @create 2020-06-14 14:53
  */
-public class Person implements Comparable {
+public class User {
     String name;
     Integer age;
 
@@ -27,17 +26,16 @@ public class Person implements Comparable {
         this.age = age;
     }
 
-    public Person(String name, Integer age) {
+    public User(String name, Integer age) {
         this.name = name;
         this.age = age;
     }
 
-    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         } else if (o != null && this.getClass() == o.getClass()) {
-            Person person = (Person) o;
+            User person = (User)o;
             return Objects.equals(this.name, person.name) && Objects.equals(this.age, person.age);
         } else {
             return false;
@@ -49,29 +47,4 @@ public class Person implements Comparable {
 
         return Objects.hash(name, age);
     }
-
-    @Override
-    public String toString() {
-        return "Person{" +
-                "name='" + name + '\'' +
-                ", age=" + age +
-                '}';
-    }
-
-    @Override
-    public int compareTo(Object o1) {
-        if (o1 instanceof Person) {
-            Person person = (Person) o1;
-//            return -this.name.compareTo(person.name);
-            int compare = this.name.compareTo(person.name);
-            if (compare != 0) {
-                return compare;
-            } else {
-                return Integer.compare(this.age, person.age);
-            }
-        } else {
-            throw new RuntimeException("输入的类型不匹配");
-        }
-    }
-
 }
