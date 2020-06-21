@@ -1,5 +1,6 @@
 package com.atguigu.java;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
@@ -94,29 +95,74 @@ public class FileReaderWriterTest {
 //                System.out.println(str);
 
                 // 正确的写法
-                String str = new String(cbuf,0,len);
+                String str = new String(cbuf, 0, len);
                 System.out.println(str);
             }
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             if (fr != null)
-            // 4. 流的关闭
-            try {
-                fr.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                // 4. 流的关闭
+                try {
+                    fr.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
         }
     }
 
     @Test
     public void testFileWriter() throws IOException {
         File file = new File("hello1.txt");
-        FileWriter fw = new FileWriter(file,true);
+        FileWriter fw = new FileWriter(file, true);
         fw.write("I have a dream. ");
         fw.write("I have a dream,too");
         fw.close();
+    }
+
+    @Test
+    public void testFileReaderFileWriter() throws IOException {
+        FileReader fr = null;
+        FileWriter fw = null;
+        try {
+            // 1. 创建File类的对象 指明读入和写出文件
+            File srcFile = new File("hello.txt");
+            File destFile = new File("hello2.txt");
+
+            // 2. FileReader流的实例化
+            fr = new FileReader(srcFile);
+            fw = new FileWriter(destFile);
+
+            // 3. 数据的读入和写出操作
+            char[] cbuf = new char[5];
+            int len;
+            while ((len = fr.read(cbuf)) != -1) {
+                // 每次写出len个字符
+                fw.write(cbuf, 0, len);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            if (fr != null) {
+                fr.close();
+            }
+            // 4. 关闭流资源
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            if (fw != null) {
+                fw.close();
+            }
+            // 4. 关闭流资源
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 }
